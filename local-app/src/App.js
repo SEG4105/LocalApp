@@ -1,8 +1,8 @@
 import './App.css';
 import { BrowserRouter, Link, Route, Routes, Switch } from 'react-router-dom'
-import { Typography, Card, Button, Drawer, useScrollTrigger, Box, Toolbar, Divider, List, ListItem, ListItemButton } from '@mui/material';
+import { Typography, Card, Button, Drawer, useScrollTrigger, Box, Toolbar, Divider, List, ListItem, ListItemButton, AppBar, IconButton } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import React, { useState } from 'react';
-import ReactPlayer from 'react-player'
 import './video-react.css'
 
 function getBaseUrl() {
@@ -22,7 +22,7 @@ function getRootUrl() {
 
 const getVideos = () => {
   return [
-    { video: "https://file-examples.com/storage/fe8c7eef0c6364f6c9504cc/2020/03/file_example_WEBM_480_900KB.webm", name: "World cooking", path: "/worldcooking" }
+    { video: "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-webm-file.webm", name: "World cooking", path: "/worldcooking" }
   ]
 }
 
@@ -32,18 +32,36 @@ const VideoDisplay = ({ video }) => (
       {video.name}
     </Typography>
 
-    <Box sx={{ maxWidth: "0.5vw" }}>
-      <ReactPlayer
-        url={video.video}
-      />
-    </Box>
+      <video controls>
+        <source src={video.video} />
+      </video>
   </>
 )
 
-function VideoDrawer({ videos }) {
+const drawerTypes = {
+  permanent: "permanent",
+  temporary: "temporary"
+}
+
+function isMobile() {
+  return window.screen.availWidth <= 500
+}
+
+function determineDrawerType() {
+  if (!isMobile()) {
+    return drawerTypes.permanent
+  } else {
+    return drawerTypes.temporary
+  }
+
+}
+
+function VideoDrawer({ videos, drawerOpen, setDrawerOpen }) {
   console.log(videos)
 
-  return (<Drawer variant="permanent">
+
+
+  return (<Drawer variant={determineDrawerType()} open={!isMobile() || drawerOpen} >
     <Toolbar>
     </Toolbar>
     <List>
@@ -60,15 +78,33 @@ function VideoDrawer({ videos }) {
           <Divider></Divider>
         </div>)
       })}
+      {isMobile() &&
+        <ListItem>
+          <ListItemButton onClick={() => setDrawerOpen(false)}> close drawer </ListItemButton>
+        </ListItem>
+      }
+
     </List>
   </Drawer>)
 }
 function App() {
+
+  const [drawerOpen, setDrawerOpen] = useState(false)
+
   return (
     <div className="App">
-
       <BrowserRouter>
-        <VideoDrawer videos={getVideos()}></VideoDrawer>
+        {isMobile() &&
+          <AppBar position="fixed" color="primary" sx={{ top: "auto", bottom: 0 }}>
+            <Toolbar>
+              <IconButton color="inherit" aria-label="open drawer" onClick={() => setDrawerOpen(true)}>
+                <MenuIcon />
+              </IconButton>
+            </Toolbar>
+          </AppBar>
+        }
+
+        <VideoDrawer  videos={getVideos()} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}></VideoDrawer>
         <Routes>
           <Route path='/' element={
             <Typography variant="h1"> Welcome to the Cokeing Video Website</Typography>
@@ -77,10 +113,11 @@ function App() {
           <>
             {
               getVideos().map((video, index) => (
-                <Route key={index} path={"/worldcooking"} element={
+                <Route key={index} path={video.path} element={
                   <>
-                    <VideoDisplay video={video}>
-                    </VideoDisplay>
+                    <div key={index + video.path}>
+                      <VideoDisplay video={video} />
+                    </div>
                   </>
                 } >
                 </Route>
