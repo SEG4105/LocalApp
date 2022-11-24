@@ -1,134 +1,147 @@
-import './App.css';
-import { BrowserRouter, Link, Route, Routes, Switch } from 'react-router-dom'
-import { Typography, Card, Button, Drawer, useScrollTrigger, Box, Toolbar, Divider, List, ListItem, ListItemButton, AppBar, IconButton } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import React, { useState } from 'react';
-import './video-react.css'
-
-function getBaseUrl() {
-  var re = new RegExp(/^.*\//);
-  document.getElementById('baseresult').innerHTML += re.exec(window.location.href);
-}
-
-function getRootUrl() {
-  document.getElementById('rootresult').innerHTML +=
-    window.location.origin
-      ? window.location.origin + '/'
-      : window.location.protocol + '/' + window.location.host + '/';
-
-  //
-  getBaseUrl();
-}
+import "./App.css";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import {
+  Typography,
+  Drawer,
+  Toolbar,
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  AppBar,
+  IconButton,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import React, { useState } from "react";
 
 const getVideos = () => {
   return [
-    { video: "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-webm-file.webm", name: "World cooking", path: "/worldcooking" }
-  ]
-}
+    {
+      video:
+        "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-webm-file.webm",
+      name: "World cooking",
+      path: "/worldcooking",
+    },
+  ];
+};
 
 const VideoDisplay = ({ video }) => (
   <>
-    <Typography variant="h1">
-      {video.name}
-    </Typography>
+    <Typography variant="h1">{video.name}</Typography>
 
-      <video controls>
-        <source src={video.video} />
-      </video>
+    <video controls>
+      <source src={video.video} />
+    </video>
   </>
-)
+);
 
 const drawerTypes = {
   permanent: "permanent",
-  temporary: "temporary"
-}
+  temporary: "temporary",
+};
 
 function isMobile() {
-  return window.screen.availWidth <= 500
+  return window.screen.availWidth <= 500;
 }
 
 function determineDrawerType() {
   if (!isMobile()) {
-    return drawerTypes.permanent
+    return drawerTypes.permanent;
   } else {
-    return drawerTypes.temporary
+    return drawerTypes.temporary;
   }
-
 }
 
 function VideoDrawer({ videos, drawerOpen, setDrawerOpen }) {
-  console.log(videos)
+  console.log(videos);
 
-
-
-  return (<Drawer variant={determineDrawerType()} open={!isMobile() || drawerOpen} >
-    <Toolbar>
-    </Toolbar>
-    <List>
-      <ListItem>
-        <Link to="/">
-          <ListItemButton>Home </ListItemButton>
-        </Link>
-      </ListItem>
-      {videos.map((video, index) => {
-        return (<div key={index}>
-          <Link to={video.path}>
-            <ListItemButton>{video.name} </ListItemButton>
-          </Link>
-          <Divider></Divider>
-        </div>)
-      })}
-      {isMobile() &&
+  return (
+    <Drawer variant={determineDrawerType()} open={!isMobile() || drawerOpen}>
+      <Toolbar></Toolbar>
+      <List>
         <ListItem>
-          <ListItemButton onClick={() => setDrawerOpen(false)}> close drawer </ListItemButton>
+          <Link to="/">
+            <ListItemButton>Home </ListItemButton>
+          </Link>
         </ListItem>
-      }
-
-    </List>
-  </Drawer>)
+        {videos.map((video, index) => {
+          return (
+            <div key={index}>
+              <Link to={video.path}>
+                <ListItemButton>{video.name} </ListItemButton>
+              </Link>
+              <Divider></Divider>
+            </div>
+          );
+        })}
+        {isMobile() && (
+          <ListItem>
+            <ListItemButton onClick={() => setDrawerOpen(false)}>
+              {" "}
+              close drawer{" "}
+            </ListItemButton>
+          </ListItem>
+        )}
+      </List>
+    </Drawer>
+  );
 }
 function App() {
-
-  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
     <div className="App">
       <BrowserRouter>
-        {isMobile() &&
-          <AppBar position="fixed" color="primary" sx={{ top: "auto", bottom: 0 }}>
+        {isMobile() && (
+          <AppBar
+            position="fixed"
+            color="primary"
+            sx={{ top: "auto", bottom: 0 }}
+          >
             <Toolbar>
-              <IconButton color="inherit" aria-label="open drawer" onClick={() => setDrawerOpen(true)}>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={() => setDrawerOpen(true)}
+              >
                 <MenuIcon />
               </IconButton>
             </Toolbar>
           </AppBar>
-        }
+        )}
 
-        <VideoDrawer  videos={getVideos()} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}></VideoDrawer>
+        <VideoDrawer
+          videos={getVideos()}
+          drawerOpen={drawerOpen}
+          setDrawerOpen={setDrawerOpen}
+        ></VideoDrawer>
         <Routes>
-          <Route path='/' element={
-            <Typography variant="h1"> Welcome to the Cokeing Video Website</Typography>
-          }>
-          </Route>
+          <Route
+            path="/"
+            element={
+              <Typography variant="h1">
+                {" "}
+                Welcome to the Cokeing Video Website
+              </Typography>
+            }
+          ></Route>
           <>
-            {
-              getVideos().map((video, index) => (
-                <Route key={index} path={video.path} element={
+            {getVideos().map((video, index) => (
+              <Route
+                key={index}
+                path={video.path}
+                element={
                   <>
                     <div key={index + video.path}>
                       <VideoDisplay video={video} />
                     </div>
                   </>
-                } >
-                </Route>
-              ))
-            }
+                }
+              ></Route>
+            ))}
           </>
         </Routes>
       </BrowserRouter>
-
-
-
     </div>
   );
 }
