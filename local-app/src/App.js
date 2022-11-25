@@ -133,10 +133,19 @@ function App() {
           <Route
             path="/"
             element={
-              <Typography variant="h1">
-                {" "}
-                Welcome to the Cooking Video Website
-              </Typography>
+              <>
+                <Typography variant="h2">
+                  {" "}
+                  Welcome to the Cooking Video Website
+                </Typography>
+                <img src="https://s.yimg.com/ny/api/res/1.2/lIOMavK9adwxtRp4w2WlVg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTcwNTtoPTM1MztjZj13ZWJw/https://media.zenfs.com/en-US/nbc_today_217/2cedf445fb55f9f5a5fd6dbf9b7feae9" />
+                <Typography variant="h6">
+                  Welcome to the awesome cooking website where you can learn
+                  amazing baking tips from around the world.
+                  <br /> Our videos load instantly anywhere in north america or
+                  east asia! No buffering necessary!
+                </Typography>
+              </>
             }
           ></Route>
           <>
