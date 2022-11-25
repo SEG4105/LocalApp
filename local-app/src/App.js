@@ -5,6 +5,7 @@ import {
   Drawer,
   Toolbar,
   Divider,
+  Box,
   List,
   ListItem,
   ListItemButton,
@@ -45,8 +46,7 @@ const getVideos = () => {
 const VideoDisplay = ({ video }) => (
   <>
     <Typography variant="h1">{video.name}</Typography>
-
-    <video controls>
+    <video controls style={{ maxWidth: "80vw" }}>
       <source src={video.video} />
     </video>
   </>
@@ -70,7 +70,6 @@ function determineDrawerType() {
 }
 
 function VideoDrawer({ videos, drawerOpen, setDrawerOpen }) {
-  console.log(videos);
 
   return (
     <Drawer variant={determineDrawerType()} open={!isMobile() || drawerOpen}>
