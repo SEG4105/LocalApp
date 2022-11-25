@@ -70,7 +70,6 @@ function determineDrawerType() {
 }
 
 function VideoDrawer({ videos, drawerOpen, setDrawerOpen }) {
-
   return (
     <Drawer variant={determineDrawerType()} open={!isMobile() || drawerOpen}>
       <Toolbar></Toolbar>
