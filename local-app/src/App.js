@@ -13,8 +13,8 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import React, { useState } from "react";
+import { videos_url } from './videoUrl'
 
-const videos_url = "https://local-bzdwa6etgsggdngn.z01.azurefd.net/videos";
 
 const getUrl = (filename) => videos_url + "/" + filename;
 
