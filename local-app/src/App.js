@@ -143,7 +143,7 @@ function App() {
                   Welcome to the awesome cooking website where you can learn
                   amazing baking tips from around the world.
                   <br /> Our videos load instantly anywhere in north america or
-                  east asia! No buffering necessary!
+                  east asia! No buffering necessary! Please enjoy our site!
                 </Typography>
               </>
             }
