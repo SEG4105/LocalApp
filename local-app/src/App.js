@@ -14,13 +14,30 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import React, { useState } from "react";
 
+const videos_url = "https://local-bzdwa6etgsggdngn.z01.azurefd.net/videos";
+
+const getUrl = (filename) => videos_url + "/" + filename;
+
 const getVideos = () => {
   return [
     {
-      video:
-        "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-webm-file.webm",
-      name: "World cooking",
-      path: "/worldcooking",
+      video: getUrl(
+        "Sandra Lee - Dinner Party 3 (Semi Homemade entire episode!) [4RO_VPyn8w4].webm"
+      ),
+      name: "Dinner Party 3",
+      path: "/dinnerParty3",
+    },
+    {
+      video: getUrl("Sandra Lee - Mapletini [pJLT9-CN1Yo].webm"),
+      name: "Mapletini",
+      path: "/mapletini",
+    },
+    {
+      video: getUrl(
+        "Sandra Lee - Cute Cakes (entire episode!) [jBx3KQm1RVo].webm"
+      ),
+      name: "Cute Cakes",
+      path: "/cuteCakes",
     },
   ];
 };
@@ -121,7 +138,7 @@ function App() {
             element={
               <Typography variant="h1">
                 {" "}
-                Welcome to the Cokeing Video Website
+                Welcome to the Cooking Video Website
               </Typography>
             }
           ></Route>
