@@ -44,9 +44,9 @@ const getVideos = () => {
 
 export const VideoDisplay = ({ video }) => (
   <>
-    <Typography variant="h1">{video.name}</Typography>
+    <Typography variant="h1" data-testid="videoHeader">{video.name}</Typography>
     <video controls style={{ maxWidth: "80vw" }}>
-      <source src={video.video} />
+      <source src={video.video} data-testid="videosource" />
     </video>
   </>
 );
@@ -68,7 +68,7 @@ export function determineDrawerType() {
   }
 }
 
-function VideoDrawer({ videos, drawerOpen, setDrawerOpen }) {
+export function VideoDrawer({ videos, drawerOpen, setDrawerOpen }) {
   return (
     <Drawer variant={determineDrawerType()} open={!isMobile() || drawerOpen}>
       <Toolbar></Toolbar>

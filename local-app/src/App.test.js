@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import App, { determineDrawerType, getUrl, VideoDisplay, isMobile } from "./App";
+import App, { determineDrawerType, getUrl, VideoDisplay, isMobile, VideoDrawer } from "./App";
 import { videos_url } from "./videoUrl";
 
 test("renders learn react link", () => {
@@ -62,4 +62,24 @@ test("app navigates to different pages", async () => {
 });
 
 
-test("video display displays video")
+test("video display displays video", () => {
+  const url = "coolvideourl"
+  const name = "cool video"
+  render(<VideoDisplay video={{name, video:url}} />)
+  const source = screen.getByTestId("videosource")
+  expect(source.getAttribute("src")).toEqual(url)
+})
+
+
+test("video display displays header with video name", () => {
+  const url = "coolvideourl"
+  const name = "cool video"
+  render(<VideoDisplay video={{name, video:url}} />)
+  const source = screen.getByTestId("videoHeader")
+  expect(source.textContent).toEqual(name)
+})
+
+
+test("video drawer renders", () => {
+  render(<VideoDrawer videos={[{name: "stuff", path: "stuff"}]}></VideoDrawer>)
+})
