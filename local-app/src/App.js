@@ -18,7 +18,7 @@ import { videos_url } from './videoUrl'
 
 export const getUrl = (filename) => videos_url + "/" + filename;
 
-export const getVideos = () => {
+const getVideos = () => {
   return [
     {
       video: getUrl(
