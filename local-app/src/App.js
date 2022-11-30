@@ -102,6 +102,7 @@ function VideoDrawer({ videos, drawerOpen, setDrawerOpen }) {
 }
 function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const onIconButtonClick = () => setDrawerOpen(true)
 
   return (
     <div className="App">
@@ -116,7 +117,7 @@ function App() {
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
-                onClick={() => setDrawerOpen(true)}
+                onClick={onIconButtonClick}
               >
                 <MenuIcon />
               </IconButton>
