@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react";
-import App, { getUrl, VideoDisplay } from "./App";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import App, { determineDrawerType, getUrl, VideoDisplay, isMobile } from "./App";
 import { videos_url } from "./videoUrl";
 
 test("renders learn react link", () => {
@@ -17,3 +17,49 @@ test("get url test", () => {
 test("videoPlayer", () => {
   render(<VideoDisplay video="coolvideobro"></VideoDisplay>)
 })
+
+test("determineDrawerType", () => {
+  const type = determineDrawerType()
+  expect(type).toBe("temporary")
+})
+
+
+test('isMobile', () => {
+  const type = isMobile()
+  expect(type).toBe(true)
+})
+
+const openDropdown = () => {
+  const drawerOpenButton = screen.getByTestId("MenuIcon")
+  fireEvent.click(drawerOpenButton)
+}
+
+const closeDropdown = async () => {
+  const closeDropdownButton = screen.getByText(/close drawer/i)
+  fireEvent.click(closeDropdownButton)
+  // check that dropdown is closed
+  const home = screen.getByText(/Home/)
+  await waitFor(() => {
+    expect(home).not.toBeInTheDocument()
+  })
+}
+
+test("dropdown opens", () => {
+  render(<App />);
+  openDropdown()
+  const linkElement = screen.getByText(/Dinner Party 3/i);
+  expect(linkElement).toBeInTheDocument();
+})
+
+test("app navigates to different pages", async () => {
+  render(<App />);
+  openDropdown()
+  const linkElement = screen.getByText(/Dinner Party 3/i);
+  fireEvent.click(linkElement)
+  await closeDropdown()
+  const title = screen.getByText(/Dinner Party 3/i);
+  expect(title).toBeInTheDocument()
+});
+
+
+test("video display displays video")

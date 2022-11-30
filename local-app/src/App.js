@@ -56,11 +56,11 @@ export const drawerTypes = {
   temporary: "temporary",
 };
 
-function isMobile() {
+export function isMobile() {
   return window.screen.availWidth <= 500;
 }
 
-function determineDrawerType() {
+export function determineDrawerType() {
   if (!isMobile()) {
     return drawerTypes.permanent;
   } else {
