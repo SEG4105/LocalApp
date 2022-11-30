@@ -102,7 +102,7 @@ function VideoDrawer({ videos, drawerOpen, setDrawerOpen }) {
 }
 function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const onIconButtonClick = () => setDrawerOpen(true)
+  const onIconButtonClick =React.useCallback( () => setDrawerOpen(true))
 
   return (
     <div className="App">
