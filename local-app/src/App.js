@@ -16,9 +16,9 @@ import React, { useState } from "react";
 import { videos_url } from './videoUrl'
 
 
-const getUrl = (filename) => videos_url + "/" + filename;
+export const getUrl = (filename) => videos_url + "/" + filename;
 
-const getVideos = () => {
+export const getVideos = () => {
   return [
     {
       video: getUrl(
@@ -42,7 +42,7 @@ const getVideos = () => {
   ];
 };
 
-const VideoDisplay = ({ video }) => (
+export const VideoDisplay = ({ video }) => (
   <>
     <Typography variant="h1">{video.name}</Typography>
     <video controls style={{ maxWidth: "80vw" }}>
@@ -51,7 +51,7 @@ const VideoDisplay = ({ video }) => (
   </>
 );
 
-const drawerTypes = {
+export const drawerTypes = {
   permanent: "permanent",
   temporary: "temporary",
 };
@@ -102,7 +102,7 @@ function VideoDrawer({ videos, drawerOpen, setDrawerOpen }) {
 }
 function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const onIconButtonClick =React.useCallback( () => setDrawerOpen(true))
+  const onIconButtonClick =React.useCallback( () => setDrawerOpen(true), [])
 
   return (
     <div className="App">
