@@ -18,7 +18,7 @@ import { videos_url } from './videoUrl'
 
 export const getUrl = (filename) => videos_url + "/" + filename;
 
-export const getVideos = () => {
+const getVideos = () => {
   return [
     {
       video: getUrl(
@@ -44,9 +44,9 @@ export const getVideos = () => {
 
 export const VideoDisplay = ({ video }) => (
   <>
-    <Typography variant="h1">{video.name}</Typography>
+    <Typography variant="h1" data-testid="videoHeader">{video.name}</Typography>
     <video controls style={{ maxWidth: "80vw" }}>
-      <source src={video.video} />
+      <source src={video.video} data-testid="videosource" />
     </video>
   </>
 );
@@ -56,11 +56,11 @@ export const drawerTypes = {
   temporary: "temporary",
 };
 
-function isMobile() {
+export function isMobile() {
   return window.screen.availWidth <= 500;
 }
 
-function determineDrawerType() {
+export function determineDrawerType() {
   if (!isMobile()) {
     return drawerTypes.permanent;
   } else {
@@ -68,7 +68,7 @@ function determineDrawerType() {
   }
 }
 
-function VideoDrawer({ videos, drawerOpen, setDrawerOpen }) {
+export function VideoDrawer({ videos, drawerOpen, setDrawerOpen }) {
   return (
     <Drawer variant={determineDrawerType()} open={!isMobile() || drawerOpen}>
       <Toolbar></Toolbar>
